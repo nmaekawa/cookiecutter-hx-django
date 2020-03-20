@@ -1,5 +1,8 @@
 from .base import *
 
+
+DEBUG = True
+
 # test db is sqlite3
 DATABASES = {
     'default': {
