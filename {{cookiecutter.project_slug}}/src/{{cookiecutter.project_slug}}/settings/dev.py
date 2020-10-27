@@ -1,5 +1,3 @@
-from .base import *
-
+from .base import *  # noqa
 
 DEBUG = True
-
