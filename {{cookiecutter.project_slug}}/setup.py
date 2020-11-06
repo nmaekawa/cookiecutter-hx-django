@@ -31,6 +31,9 @@ requirements = [
 ]
 
 test_requirements = [
+    "black",
+    "flake8",
+    "isort",
     "pytest",
     "pytest-django",
     "pytest-env",
