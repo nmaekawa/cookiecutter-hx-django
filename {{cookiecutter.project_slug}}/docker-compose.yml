@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    ports:
+      - "8001:5432"
+    environment:
+      POSTGRES_USER: {{cookiecutter.project_slug}}
+      POSTGRES_PASSWORD: {{cookiecutter.project_slug}}
+      POSTGRES_DB: {{cookiecutter.project_slug}}
+  web:
+    build: .
+    image: hx/{{cookiecutter.project_slug}}:dev
+    command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      {{cookiecutter.project_slug | upper}}_DOTENV_PATH: "/code/docker_dotenv.env"
+    networks:
+      default:
+      public:
+        aliases:
+          - {{cookiecutter.project_slug}}.localhost
+
+networks:
+  public:
+

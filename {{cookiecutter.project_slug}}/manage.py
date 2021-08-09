@@ -9,8 +9,8 @@ from dotenv import load_dotenv
 def main():
     # if dotenv file, load it
     dotenv_path = None
-    if "{{cookiecutter.project_prefix}}_DOTENV_PATH" in os.environ:
-        dotenv_path = os.environ["{{cookiecutter.project_prefix}}_DOTENV_PATH"]
+    if "{{cookiecutter.project_prefix | upper}}_DOTENV_PATH" in os.environ:
+        dotenv_path = os.environ["{{cookiecutter.project_prefix | upper}}_DOTENV_PATH"]
     elif os.path.exists(
         os.path.join("src", "{{cookiecutter.project_slug}}", "settings", ".env")
     ):
