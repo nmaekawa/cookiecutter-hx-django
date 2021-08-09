@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class UserConfig(AppConfig):
-    name = "user"
+class UtilConfig(AppConfig):
+    name = "{{ cookiecutter.project_slug }}.apps.util"
