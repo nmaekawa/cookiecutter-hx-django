@@ -22,7 +22,7 @@ PROJECT_NAME = "{{cookiecutter.project_slug}}"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
-    "{{cookiecutter.project_prefix}}_DJANGO_SECRET_KEY", "CHANGE_ME"
+    "{{cookiecutter.project_prefix | upper }}_DJANGO_SECRET_KEY", "CHANGE_ME"
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -32,7 +32,7 @@ DEBUG = debug.lower() == "true"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 allowed_hosts_other = os.environ.get(
-    "{{cookiecutter.project_prefix}}_ALLOWED_HOSTS", ""
+    "{{cookiecutter.project_prefix | upper }}_ALLOWED_HOSTS", ""
 )
 if allowed_hosts_other:
     ALLOWED_HOSTS.extend(allowed_hosts_other.split())
@@ -87,17 +87,17 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get(
-            "{{cookiecutter.project_prefix}}_DB_NAME", "{{cookiecutter.project_slug}}"
+            "{{cookiecutter.project_prefix | upper }}_DB_NAME", "{{cookiecutter.project_slug}}"
         ),
         "USER": os.environ.get(
-            "{{cookiecutter.project_prefix}}_DB_USER", "{{cookiecutter.project_slug}}"
+            "{{cookiecutter.project_prefix | upper }}_DB_USER", "{{cookiecutter.project_slug}}"
         ),
         "PASSWORD": os.environ.get(
-            "{{cookiecutter.project_prefix}}_DB_PASSWORD",
+            "{{cookiecutter.project_prefix | upper }}_DB_PASSWORD",
             "{{cookiecutter.project_slug}}",
         ),
-        "HOST": os.environ.get("{{cookiecutter.project_prefix}}_DB_HOST", "localhost"),
-        "PORT": os.environ.get("{{cookiecutter.project_prefix}}_DB_PORT", "5432"),
+        "HOST": os.environ.get("{{cookiecutter.project_prefix | upper }}_DB_HOST", "localhost"),
+        "PORT": os.environ.get("{{cookiecutter.project_prefix | upper }}_DB_PORT", "5432"),
         "ATOMIC_REQUESTS": False,
         "CONN_MAX_AGE": 500,  # permanent connections
     },
@@ -137,7 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = "/static/"
 STATIC_ROOT = os.environ.get(
-    "{{cookiecutter.project_prefix}}_STATIC_ROOT",
+    "{{cookiecutter.project_prefix | upper }}_STATIC_ROOT",
     os.path.join(BASE_DIR, "http_static/"),
 )
 
@@ -149,9 +149,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Logging config
 _DEFAULT_LOG_LEVEL = os.environ.get(
-    "{{cookiecutter.project_prefix}}_LOG_LEVEL", "DEBUG"
+    "{{cookiecutter.project_prefix | upper }}_LOG_LEVEL", "DEBUG"
 )
-_LOG_ROOT = os.environ.get("{{cookiecutter.project_prefix}}_LOG_ROOT", BASE_DIR)
+_LOG_ROOT = os.environ.get("{{cookiecutter.project_prefix | upper }}_LOG_ROOT", BASE_DIR)
 
 LOGGING = {
     "version": 1,
