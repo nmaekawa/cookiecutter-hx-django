@@ -10,8 +10,8 @@ def main():
     # if dotenv file, load it
     # check env var, then a default.env in project root
     dotenv_path = None
-    if "{{cookiecutter.project_prefix | upper}}_DOTENV_PATH" in os.environ:
-        dotenv_path = os.environ["{{cookiecutter.project_prefix | upper}}_DOTENV_PATH"]
+    if "{{cookiecutter.project_slug | upper}}_DOTENV_PATH" in os.environ:
+        dotenv_path = os.environ["{{cookiecutter.project_slug | upper}}_DOTENV_PATH"]
     else:
         # check for default dotenv in project root
         managepy_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

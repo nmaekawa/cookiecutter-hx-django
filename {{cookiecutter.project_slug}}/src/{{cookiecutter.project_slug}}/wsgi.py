@@ -13,11 +13,16 @@ from django.core.wsgi import get_wsgi_application
 from dotenv import load_dotenv
 
 # if dotenv file, load it
+# check env var, then a default.env in project root
 dotenv_path = None
-if "{{cookiecutter.project_prefix}}_DOTENV_PATH" in os.environ:
-    dotenv_path = os.environ["{{cookiecutter.project_prefix}}_DOTENV_PATH"]
-elif os.path.exists(os.path.join("{{cookiecutter.project_slug}}", "settings", ".env")):
-    dotenv_path = os.path.join("{{cookiecutter.project_slug}}", "settings", ".env")
+if "{{cookiecutter.project_slug | upper}}_DOTENV_PATH" in os.environ:
+    dotenv_path = os.environ["{{cookiecutter.project_slug | upper}}_DOTENV_PATH"]
+else:
+    # check for default dotenv in project root
+    managepy_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    default_env = os.path.join(managepy_dir, "default.env")
+if os.path.exists(default_env):
+    dotenv_path = default_env
 if dotenv_path:
     load_dotenv(dotenv_path)
 
