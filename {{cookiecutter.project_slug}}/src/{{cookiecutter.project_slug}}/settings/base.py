@@ -87,17 +87,23 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get(
-            "{{cookiecutter.project_prefix | upper }}_DB_NAME", "{{cookiecutter.project_slug}}"
+            "{{cookiecutter.project_prefix | upper }}_DB_NAME",
+            "{{cookiecutter.project_slug}}",
         ),
         "USER": os.environ.get(
-            "{{cookiecutter.project_prefix | upper }}_DB_USER", "{{cookiecutter.project_slug}}"
+            "{{cookiecutter.project_prefix | upper }}_DB_USER",
+            "{{cookiecutter.project_slug}}",
         ),
         "PASSWORD": os.environ.get(
             "{{cookiecutter.project_prefix | upper }}_DB_PASSWORD",
             "{{cookiecutter.project_slug}}",
         ),
-        "HOST": os.environ.get("{{cookiecutter.project_prefix | upper }}_DB_HOST", "localhost"),
-        "PORT": os.environ.get("{{cookiecutter.project_prefix | upper }}_DB_PORT", "5432"),
+        "HOST": os.environ.get(
+            "{{cookiecutter.project_prefix | upper }}_DB_HOST", "localhost"
+        ),
+        "PORT": os.environ.get(
+            "{{cookiecutter.project_prefix | upper }}_DB_PORT", "5432"
+        ),
         "ATOMIC_REQUESTS": False,
         "CONN_MAX_AGE": 500,  # permanent connections
     },
@@ -151,7 +157,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 _DEFAULT_LOG_LEVEL = os.environ.get(
     "{{cookiecutter.project_prefix | upper }}_LOG_LEVEL", "DEBUG"
 )
-_LOG_ROOT = os.environ.get("{{cookiecutter.project_prefix | upper }}_LOG_ROOT", BASE_DIR)
+_LOG_ROOT = os.environ.get(
+    "{{cookiecutter.project_prefix | upper }}_LOG_ROOT", BASE_DIR
+)
 
 LOGGING = {
     "version": 1,
