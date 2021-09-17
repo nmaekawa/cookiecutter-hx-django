@@ -2,3 +2,4 @@ django
 django-log-request-id
 psycopg2
 python-dotenv
+django-cors-headers

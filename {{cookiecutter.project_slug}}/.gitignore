@@ -50,3 +50,5 @@ public/
 # virtualenv
 venv
 
+# mac annoyances
+*.DS_Store

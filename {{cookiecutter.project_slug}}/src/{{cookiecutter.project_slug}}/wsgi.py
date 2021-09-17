@@ -1,5 +1,5 @@
 """
-WSGI config for playaway project.
+WSGI config for {{cookiecutter.project_slug}} project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -21,8 +21,8 @@ else:
     # check for default dotenv in project root
     managepy_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     default_env = os.path.join(managepy_dir, "default.env")
-if os.path.exists(default_env):
-    dotenv_path = default_env
+    if os.path.exists(default_env):
+        dotenv_path = default_env
 if dotenv_path:
     load_dotenv(dotenv_path)
 
