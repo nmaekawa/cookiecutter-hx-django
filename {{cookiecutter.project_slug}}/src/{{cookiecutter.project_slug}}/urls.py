@@ -13,9 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
+
+
+if settings.USE_HKEY:
+    import django_cas_ng.views as cas_views
+
+    urlpatterns += [
+        path("accounts/login", cas_views.LoginView.as_view(), name="cas_ng_login"),
+        path("accounts/logout", cas_views.LogoutView.as_view(), name="cas_ng_logout"),
+    ]

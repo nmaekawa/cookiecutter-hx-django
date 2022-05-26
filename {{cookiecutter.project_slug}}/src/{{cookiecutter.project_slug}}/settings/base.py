@@ -64,10 +64,34 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = PROJECT_NAME + ".urls"
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
+STATIC_URL = "/static/"
+STATIC_ROOT = os.environ.get(
+    "{{cookiecutter.project_slug | upper }}_STATIC_ROOT",
+    os.path.join(BASE_DIR, "http_static/"),
+)
+
+# vue project location
+VUE_ROOTDIR = os.environ.get(
+    "VUE_ROOTDIR",
+    os.path.join(
+        BASE_DIR,
+        "../../../{{ cookiecutter.project_slug }}-ui/{{ cookiecutter.project_slug }}",
+    ),
+)
+# vue assets directory (assetsDir)
+STATICFILES_DIRS = [
+    os.path.join(VUE_ROOTDIR, "dist/static"),
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+            os.path.join(VUE_ROOTDIR, "dist"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -114,22 +138,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-"""
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-"""
+AUTH_PASSWORD_VALIDATORS = []
 
 
 # Internationalization
@@ -137,17 +146,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_URL = "/static/"
-STATIC_ROOT = os.environ.get(
-    "{{cookiecutter.project_slug | upper }}_STATIC_ROOT",
-    os.path.join(BASE_DIR, "http_static/"),
-)
+# USE_L10N = True  # deprecated in django 5.0
+USE_TZ = True  # TODO: use zoneinfo instead of pytz
 
 
 # Default primary key field type
@@ -216,4 +216,20 @@ LOGGING = {
 }
 
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True  # accept requests from anyone
+
+# config hkey
+use_hkey = os.environ.get("USE_HKEY", "false")
+USE_HKEY = use_hkey.lower() == "true"
+
+if USE_HKEY:
+    INSTALLED_APPS.append("django_cas_ng")
+    MIDDLEWARE.append("django_cas_ng.middleware.CASMiddleware")
+    AUTHENTICATION_BACKENDS = (
+        "django.contrib.auth.backends.ModelBackend",
+        "django_cas_ng.backends.CASBackend",
+    )
+    CAS_SERVER_URL = os.environ.get("CAS_SERVER_URL", "http://localhost:9000/cas/")
+    CAS_VERSION = "3"
+    CAS_CREATE_USER = True
+    CAS_REDIRECT_URL = "/"  # landing page
